@@ -10,5 +10,7 @@
 
         <div>{{ $movie->rating }}</div>
         <div>{{ $movie->premiered_at }}</div>
+
+        <x-list-component :items="$movie->actors">Actors</x-list-component>
     </div>
 @endsection
