@@ -22,4 +22,26 @@ class MovieController extends Controller
             'movie' => $movie
         ]);
     }
+
+    public function create()
+    {
+        return view('movies.create');
+    }
+
+    public function store(Request $request)
+    {
+        //validation
+
+        Movie::create([
+            'title' => $request->title,
+            'rating' => $request->rating,
+        ]);
+
+        return redirect(route('movies.index'));
+    }
+
+    public function edit(Movie $movie)
+    {
+        dd($movie);
+    }
 }
