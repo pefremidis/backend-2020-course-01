@@ -2,8 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\MovieFormRequest;
 use App\Models\Movie;
-use Illuminate\Http\Request;
 
 class MovieController extends Controller
 {
@@ -28,20 +28,29 @@ class MovieController extends Controller
         return view('movies.create');
     }
 
-    public function store(Request $request)
+    public function store(MovieFormRequest $request)
     {
-        //validation
-
-        Movie::create([
-            'title' => $request->title,
-            'rating' => $request->rating,
-        ]);
+        $request->insert();
 
         return redirect(route('movies.index'));
     }
 
     public function edit(Movie $movie)
     {
-        dd($movie);
+        return view('movies.edit', [
+            'movie' => $movie
+        ]);
+    }
+
+    public function update(MovieFormRequest $request, Movie $movie) {
+        $request->update($movie);
+
+        return redirect(route('movies.index'));
+    }
+
+    public function destroy(Movie $movie) {
+        $movie->delete();
+
+        return redirect(route('movies.index'));
     }
 }
